@@ -2,7 +2,6 @@ import telebot
 import requests
 import random
 
-from laboratorki.tgbot import keyworld
 
 token = '7912369351:AAF4IlZpP9reiR3rs8n8rglbc3myH-NI_Pk'
 API_KEY = '46cb095b9903c9e08a63ca80c1d57896'
