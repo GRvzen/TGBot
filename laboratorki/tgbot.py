@@ -3,7 +3,7 @@ import requests
 import random
 
 
-token = '7912369351:AAF4IlZpP9reiR3rs8n8rglbc3myH-NI_Pk'
+token = '7879796408:AAGe_RXPyVHNhjiy7bFN5j-IlJ7GxBB6bAc'
 API_KEY = '46cb095b9903c9e08a63ca80c1d57896'
 bot = telebot.TeleBot(token)
 
@@ -11,7 +11,8 @@ user_data = {}
 
 main_keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
 main_keyboard.row('ℹ️ Помощь', '✏️ Сменить имя', '🎲 Случайное фото достопримечательности')
-main_keyboard.row('⛅️ Погода', '🏛 Достопримечательности', '🍽 Где поесть', '👥 Создатели')
+main_keyboard.row('⛅️ Погода', '🏛 Достопримечательности', '🍽 Где поесть')
+main_keyboard.row('👥 Создатели')
 
 waiting_for_name = {}
 
@@ -83,13 +84,6 @@ def send_weather(message):
     except Exception as e:
         bot.send_message(message.chat.id, 'Произошла ошибка при получении данных о погоде.')
 
-
-#@bot.message_handler(func=lambda message: message.text == '👥 Создатели')
-#def credits(message):
-    #bot.send_message(message.chat.id, "Бота создавали:\nСавушкин Григорий Данилович\nПожидаев Роман Дмитриевич\nСтуденты группы 632", reply_markup=keyworld)
-
-
-
 @bot.message_handler(func=lambda message: message.text == '🏛 Достопримечательности')
 def description_command(message):
     description_menu = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -129,11 +123,20 @@ def send_ramen_location(message):
     bot.send_location(message.chat.id, 56.4780, 84.9502)
     bot.send_message(message.chat.id, f'{user_data[message.chat.id]['name']}, здесь подают очень вкуные блюда азиатской кухни!')
 
-
 @bot.message_handler(func=lambda message: message.text in ['🍔 Фуд-корт'])
 def send_lampochka_location(message):
     bot.send_location(message.chat.id, 56.4647, 84.9572)
     bot.send_message(message.chat.id, f'{user_data[message.chat.id]['name']}, Лампочка - хороший гастрохолл, где есть множество различных заведений!')
+
+@bot.message_handler(func=lambda message: message.text == '👥 Создатели')
+def developers_comand(message):
+    gif_url = 'https://i.postimg.cc/W3Qp4gy9/0524.gif'
+    bot.send_animation(message.chat.id, gif_url)
+    bot.send_message(message.chat.id, '''Создателями бота являются:
+Савушкин Григорий Данилович
+Пожидаев Роман Дмитриевич
+Студенты группы 632''', reply_markup=main_keyboard)
+
 
 @bot.message_handler(func=lambda message: message.text == '⬅️ Назад')
 def back_command(message):
@@ -147,4 +150,3 @@ def echo_all(message):
         bot.reply_to(message, 'Команда не распознана. Нажмите "ℹ️ Помощь" для информации.', reply_markup=main_keyboard)
 
 bot.infinity_polling()
-
